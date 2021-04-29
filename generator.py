@@ -19,18 +19,34 @@
 # Code Developed by:
 # Ahmed A. A. Osman
 
-from star.ch.star import STAR
+import trimesh
+import pyrender
+
+from PoseUtils import SpecialPoseGenerator
+
+from star.tf.star import STAR
+import tensorflow as tf
 import numpy as np
+batch_size = 10
+gender = 'male'
+star = STAR()
+trans = tf.constant(np.zeros((1,3)),dtype=tf.float32)
 
-model = STAR(gender='female',num_betas=10)
-## Assign random pose and shape parameters
-model.pose[:] = np.random.rand(model.pose.size) * .2
-model.betas[:] = np.random.rand(model.betas.size) * .03
+spg = SpecialPoseGenerator()
 
-for j in range(0,10):
-    model.betas[:] = 0.0  #Each loop all PC components are set to 0.
-    for i in np.linspace(-3,3,10): #Varying the jth component +/- 3 standard deviations
-        model.betas[j] = i
-   
+spg.from_show_hands_to_stretched_down(0)
 
 
+pose = spg.get_pose_parameters()
+
+betas = np.zeros((1,10))
+betas[0][1] = 2
+
+betas = tf.constant(betas,dtype=tf.float32)
+star_mesh = np.array(star(pose,betas,trans))
+print(star_mesh)
+
+mesh = pyrender.Mesh.from_points(star_mesh[0])
+scene = pyrender.Scene()
+scene.add(mesh)
+pyrender.Viewer(scene, use_raymond_lighting=True)

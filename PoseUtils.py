@@ -1,5 +1,5 @@
 import numpy as np
-import tensorflow as tf
+import random
 
 class PoseParameterGenerator():
     
@@ -7,7 +7,7 @@ class PoseParameterGenerator():
         self.pose_parameters = np.zeros((1,72))
          
     def get_pose_parameters(self):
-        return tf.constant(self.pose_parameters, dtype=tf.float32)
+        return self.pose_parameters
     
     def set_pose_parameters(self, pose_parameters):
         self.pose_parameters = pose_parameters
@@ -1878,6 +1878,41 @@ class SpecialPoseGenerator(PoseParameterGenerator):
         self.rotate_left_arm_horizontally_to_front(0, angle * 0.4, operation)  
         self.rotate_right_arm_horizontally_to_front(0, angle * 0.4, operation) 
 
+    def add_random_variations(self, random_variations):
+        rpv = RandomPoseVariations()
+        rpv.set_pose_parameters(self.get_pose_parameters())
+        
+        rpv.define_variations(random_variations)
+        
+        
+class RandomPoseVariations(PoseParameterGenerator):
+    
+    def __init__(self, *args, **kwargs):
+        super(RandomPoseVariations, self).__init__(*args, **kwargs)
+        
+    def define_variations(self, random_variations):
+        
+        if len(random_variations) == 0:
+            raise ValueError("List of variations is empty")
+        
+        for key, variation in enumerate(random_variations):
+            
+            if variation[3] is None:
+                direction = random.randint(0,1)
+            else:
+                direction = variation[3]
+            
+            if variation[0] == 'rotate_head':
+                if random.uniform(0, 1) <= variation[1]:
+                    self.rotate_head(direction, random.uniform(0, variation[2]), operation = "add")
+                    
+            if variation[0] == 'bow_head':
+                if random.uniform(0, 1) <= variation[1]:
+                    self.bow_head(direction, random.uniform(0, variation[2]), operation = "add")
+                    
+            if variation[0] == 'tilt_head':
+                if random.uniform(0, 1) <= variation[1]:
+                    self.tilt_head(direction, random.uniform(0, variation[2]), operation = "add")
 
 """
 Perspektive T-Pose zum Betrachter hin gerichtet

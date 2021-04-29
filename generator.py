@@ -32,16 +32,24 @@ gender = 'male'
 star = STAR()
 trans = tf.constant(np.zeros((1,3)),dtype=tf.float32)
 
+#["name_of_variation", probabiltiy, max_angle]
+
+random_variations = [
+        ["rotate_head", 1, 0.5, None],
+        ["bow_head", 1, 0.5, None],
+        ["tilt_head", 1, 0.5, None],
+    ]
+
 spg = SpecialPoseGenerator()
 
-#spg.from_show_hands_to_stretched_down(0)
 spg.rotate_torso(1, 1)
 spg.rotate_head(0, 1, "add")
 spg.rotate_head(1, 1, "add")
 spg.rotate_torso(0, 1, "add")
 
+spg.add_random_variations(random_variations)
 
-pose = spg.get_pose_parameters()
+pose = tf.constant(spg.get_pose_parameters(), dtype=tf.float32)
 
 betas = np.zeros((1,10))
 betas[0][1] = 2

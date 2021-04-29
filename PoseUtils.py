@@ -12,17 +12,20 @@ class PoseParameterGenerator():
     def set_pose_parameters(self, pose_parameters):
         self.pose_parameters = pose_parameters
     
-    def check_arguments(self, direction, angle):
+    def check_arguments(self, direction, angle, operation):
         wrong_direction_argument = direction == 1 or direction == 0
         wrong_angle_argument = angle >= 0 and angle <= 1
+        wrong_operation_argument = operation == "set" or operation == "add"
         
         if not wrong_direction_argument:
             raise ValueError("Wrong Direction passed. Should be 0 or 1")
         elif not wrong_angle_argument:
             raise ValueError("Wrong Angle passed. Should be between 0 and 1")
+        elif not wrong_operation_argument:
+            raise ValueError("Wrong Operation passed. Should be 'set' or 'add'")
             
     
-    def rotate_right_hand(self, direction = 1, angle = 1):
+    def rotate_right_hand(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -49,21 +52,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.3
             
-            self.pose_parameters[0][60] = angle * rotation_factor
-            self.pose_parameters[0][66] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][60] = angle * rotation_factor
+                self.pose_parameters[0][66] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][60] += angle * rotation_factor
+                self.pose_parameters[0][66] += angle * rotation_factor
         
         else:
             rotation_factor = -0.5
             
-            self.pose_parameters[0][60] = angle * rotation_factor
-            self.pose_parameters[0][66] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][60] = angle * rotation_factor
+                self.pose_parameters[0][66] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][60] += angle * rotation_factor
+                self.pose_parameters[0][66] += angle * rotation_factor
     
-    def rotate_right_elbow(self, direction = 1, angle = 1):
+    def rotate_right_elbow(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -90,19 +101,24 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][54] = angle * rotation_factor
-            
+            if operation == "set":
+                self.pose_parameters[0][54] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][54] += angle * rotation_factor
         else:
             rotation_factor = -1.3
             
-            self.pose_parameters[0][54] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][54] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][54] += angle * rotation_factor
         
-    def rotate_right_shoulder(self, direction = 1, angle = 1):
+    def rotate_right_shoulder(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -129,22 +145,30 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.1
             
-            self.pose_parameters[0][39] = angle * rotation_factor
-            self.pose_parameters[0][48] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][39] = angle * rotation_factor
+                self.pose_parameters[0][48] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][39] += angle * rotation_factor
+                self.pose_parameters[0][48] += angle * rotation_factor
             
         else:
             rotation_factor = -0.45
             
-            self.pose_parameters[0][39] = angle * rotation_factor
-            self.pose_parameters[0][48] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][39] = angle * rotation_factor
+                self.pose_parameters[0][48] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][39] += angle * rotation_factor
+                self.pose_parameters[0][48] += angle * rotation_factor
 
         
-    def rotate_whole_right_arm(self, direction = 1, angle = 1):
+    def rotate_whole_right_arm(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -175,7 +199,7 @@ class PoseParameterGenerator():
         self.rotate_right_elbow(direction,angle)
         self.rotate_right_hand(direction,angle)
 
-    def rotate_left_hand(self, direction = 1, angle = 1):
+    def rotate_left_hand(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -202,22 +226,30 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             
             rotation_factor = 0.3
             
-            self.pose_parameters[0][63] = angle * rotation_factor
-            self.pose_parameters[0][69] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][63] = angle * rotation_factor
+                self.pose_parameters[0][69] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][63] += angle * rotation_factor
+                self.pose_parameters[0][69] += angle * rotation_factor
         else:
             
             rotation_factor = -0.5
             
-            self.pose_parameters[0][63] = angle * rotation_factor
-            self.pose_parameters[0][69] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][63] = angle * rotation_factor
+                self.pose_parameters[0][69] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][63] += angle * rotation_factor
+                self.pose_parameters[0][69] += angle * rotation_factor
 
-    def rotate_left_elbow(self, direction = 1, angle = 1):
+    def rotate_left_elbow(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -244,19 +276,23 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.6
-            
-            self.pose_parameters[0][57] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][57] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][57] += angle * rotation_factor
             
         else:
             rotation_factor = -1.3
-            
-            self.pose_parameters[0][57] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][57] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][57] += angle * rotation_factor
 
-    def rotate_left_shoulder(self, direction = 1, angle = 1):
+    def rotate_left_shoulder(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -283,21 +319,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.1
             
-            self.pose_parameters[0][42] = angle * rotation_factor
-            self.pose_parameters[0][51] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][42] = angle * rotation_factor
+                self.pose_parameters[0][51] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][42] += angle * rotation_factor
+                self.pose_parameters[0][51] += angle * rotation_factor
             
         else:
             rotation_factor = -0.45
             
-            self.pose_parameters[0][42] = angle * rotation_factor
-            self.pose_parameters[0][51] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][42] = angle * rotation_factor
+                self.pose_parameters[0][51] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][42] += angle * rotation_factor
+                self.pose_parameters[0][51] += angle * rotation_factor
 
-    def rotate_whole_left_arm(self, direction = 1, angle = 1):
+    def rotate_whole_left_arm(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -324,11 +368,11 @@ class PoseParameterGenerator():
 
         """
         
-        self.rotate_left_shoulder(direction,angle)
-        self.rotate_left_elbow(direction,angle)
-        self.rotate_left_hand(direction,angle)
+        self.rotate_left_shoulder(direction, angle, operation)
+        self.rotate_left_elbow(direction, angle, operation)
+        self.rotate_left_hand(direction, angle, operation)
 
-    def lift_or_lower_right_arm(self, direction = 1, angle = 1):
+    def lift_or_lower_right_arm(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -355,24 +399,31 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             
             rotation_factor = 0.75
-            
-            self.pose_parameters[0][41] = rotation_factor * angle
-            self.pose_parameters[0][50] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][41] = rotation_factor * angle
+                self.pose_parameters[0][50] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][41] += rotation_factor * angle
+                self.pose_parameters[0][50] += rotation_factor * angle
             
         if direction == 0:
         
             rotation_factor = -0.6
             
-            self.pose_parameters[0][41] = rotation_factor * angle
-            self.pose_parameters[0][50] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][41] = rotation_factor * angle
+                self.pose_parameters[0][50] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][41] += rotation_factor * angle
+                self.pose_parameters[0][50] += rotation_factor * angle
             
     
-    def lift_or_lower_left_arm(self, direction = 1, angle = 1):
+    def lift_or_lower_left_arm(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -399,71 +450,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -0.75
             
-            self.pose_parameters[0][44] = rotation_factor * angle
-            self.pose_parameters[0][53] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][44] = rotation_factor * angle
+                self.pose_parameters[0][53] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][44] += rotation_factor * angle
+                self.pose_parameters[0][53] += rotation_factor * angle
             
         if direction == 0:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][44] = rotation_factor * angle
-            self.pose_parameters[0][53] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][44] = rotation_factor * angle
+                self.pose_parameters[0][53] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][44] += rotation_factor * angle
+                self.pose_parameters[0][53] += rotation_factor * angle
             
-    def bow_right_elbow_to_front(self, angle = 1):
-        """
-        
-
-        Parameters
-        ----------
-        angle : TYPE, optional
-            DESCRIPTION. The default is 1.
-            
-        angle = 0: Keine Rotation
-        angle = 1: Maximale Rotation
-        
-        rotation_factor: ~1.6 = 90 Grad
-        
-        Returns
-        -------
-        None.
-
-        """
-        
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
-        
-        rotation_factor = -2
-        self.pose_parameters[0][56] = rotation_factor * angle
-        
-    def bow_left_elbow_to_front(self, angle = 1):
-        """
-        
-
-        Parameters
-        ----------
-        angle : TYPE, optional
-            DESCRIPTION. The default is 1.
-
-        angle = 0: Keine Rotation
-        angle = 1: Maximale Rotation
-        
-        rotation_factor: ~1.6 = 90 Grad        
-
-        Returns
-        -------
-        None.
-
-        """
-        
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
-        
-        rotation_factor = 2
-        self.pose_parameters[0][59] = rotation_factor * angle
-        
-    def bow_right_elbow_to_back(self, angle = 1):
+    def bow_right_elbow_to_front(self, angle = 1, operation = "set"):
         """
         
 
@@ -483,37 +492,16 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
-        
-        rotation_factor = 2
-        self.pose_parameters[0][56] = rotation_factor * angle
-        
-    def bow_left_elbow_to_back(self, angle = 1):
-        """
-        
-
-        Parameters
-        ----------
-        angle : TYPE, optional
-            DESCRIPTION. The default is 1.
-
-        angle = 0: Keine Rotation
-        angle = 1: Maximale Rotation
-        
-        rotation_factor: ~1.6 = 90 Grad        
-
-        Returns
-        -------
-        None.
-
-        """
-        
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = -2
-        self.pose_parameters[0][59] = rotation_factor * angle
         
-    def bow_left_elbow_to_top(self, angle = 1):
+        if operation == "set":
+            self.pose_parameters[0][56] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][56] += rotation_factor * angle
+        
+    def bow_left_elbow_to_front(self, angle = 1, operation = "set"):
         """
         
 
@@ -533,37 +521,16 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = 2
-        self.pose_parameters[0][58] = rotation_factor * angle
         
-    def bow_left_elbow_to_bottom(self, angle = 1):
-        """
+        if operation == "set":
+            self.pose_parameters[0][59] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][59] += rotation_factor * angle
         
-
-        Parameters
-        ----------
-        angle : TYPE, optional
-            DESCRIPTION. The default is 1.
-
-        angle = 0: Keine Rotation
-        angle = 1: Maximale Rotation
-        
-        rotation_factor: ~1.6 = 90 Grad        
-
-        Returns
-        -------
-        None.
-
-        """
-        
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
-        
-        rotation_factor = -2
-        self.pose_parameters[0][58] = rotation_factor * angle
-        
-    def bow_right_elbow_to_top(self, angle = 1):
+    def bow_right_elbow_to_back(self, angle = 1, operation = "set"):
         """
         
 
@@ -583,12 +550,103 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
+        
+        rotation_factor = 2
+        
+        if operation == "set":
+            self.pose_parameters[0][56] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][56] += rotation_factor * angle
+        
+    def bow_left_elbow_to_back(self, angle = 1, operation = "set"):
+        """
+        
+
+        Parameters
+        ----------
+        angle : TYPE, optional
+            DESCRIPTION. The default is 1.
+
+        angle = 0: Keine Rotation
+        angle = 1: Maximale Rotation
+        
+        rotation_factor: ~1.6 = 90 Grad        
+
+        Returns
+        -------
+        None.
+
+        """
+        
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = -2
-        self.pose_parameters[0][55] = rotation_factor * angle
         
-    def bow_right_elbow_to_bottom(self, angle = 1):
+        if operation == "set":
+            self.pose_parameters[0][59] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][59] += rotation_factor * angle
+        
+    def bow_left_elbow_to_top(self, angle = 1, operation = "set"):
+        """
+        
+
+        Parameters
+        ----------
+        angle : TYPE, optional
+            DESCRIPTION. The default is 1.
+
+        angle = 0: Keine Rotation
+        angle = 1: Maximale Rotation
+        
+        rotation_factor: ~1.6 = 90 Grad        
+
+        Returns
+        -------
+        None.
+
+        """
+        
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
+        
+        rotation_factor = 2
+        
+        if operation == "set":
+            self.pose_parameters[0][58] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][58] += rotation_factor * angle
+        
+    def bow_left_elbow_to_bottom(self, angle = 1, operation = "set"):
+        """
+        
+
+        Parameters
+        ----------
+        angle : TYPE, optional
+            DESCRIPTION. The default is 1.
+
+        angle = 0: Keine Rotation
+        angle = 1: Maximale Rotation
+        
+        rotation_factor: ~1.6 = 90 Grad        
+
+        Returns
+        -------
+        None.
+
+        """
+        
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
+        
+        rotation_factor = -2
+        
+        if operation == "set":
+            self.pose_parameters[0][58] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][58] += rotation_factor * angle
+        
+    def bow_right_elbow_to_top(self, angle = 1, operation = "set"):
         """
         
 
@@ -608,12 +666,45 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
+        
+        rotation_factor = -2
+        
+        if operation == "set":
+            self.pose_parameters[0][55] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][55] += rotation_factor * angle
+        
+    def bow_right_elbow_to_bottom(self, angle = 1, operation = "set"):
+        """
+        
+
+        Parameters
+        ----------
+        angle : TYPE, optional
+            DESCRIPTION. The default is 1.
+            
+        angle = 0: Keine Rotation
+        angle = 1: Maximale Rotation
+        
+        rotation_factor: ~1.6 = 90 Grad
+        
+        Returns
+        -------
+        None.
+
+        """
+        
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = 2
-        self.pose_parameters[0][55] = rotation_factor * angle
         
-    def lift_or_lower_right_leg_front_or_back(self, direction = 1, angle = 1):
+        if operation == "set":
+            self.pose_parameters[0][55] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][55] += rotation_factor * angle
+        
+    def lift_or_lower_right_leg_front_or_back(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -640,19 +731,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 1.6
             
-            self.pose_parameters[0][3] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][3] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][3] += rotation_factor * angle
         
         else:
             rotation_factor = -1.6
             
-            self.pose_parameters[0][3] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][3] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][3] += rotation_factor * angle
             
-    def lift_or_lower_left_leg_front_or_back(self, direction = 1, angle = 1):
+    def lift_or_lower_left_leg_front_or_back(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -679,19 +776,24 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 1.6
             
-            self.pose_parameters[0][6] = rotation_factor * angle
-        
+            if operation == "set":
+                self.pose_parameters[0][6] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][6] += rotation_factor * angle
         else:
             rotation_factor = -1.6
             
-            self.pose_parameters[0][6] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][6] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][6] += rotation_factor * angle
     
-    def lift_or_lower_right_leg_sideways(self, direction = 1, angle = 1):
+    def lift_or_lower_right_leg_sideways(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -718,19 +820,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 1.6
             
-            self.pose_parameters[0][5] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][5] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][5] += rotation_factor * angle
         
         else:
             rotation_factor = -0.1
             
-            self.pose_parameters[0][5] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][5] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][5] += rotation_factor * angle
             
-    def lift_or_lower_left_leg_sideways(self, direction = 1, angle = 1):
+    def lift_or_lower_left_leg_sideways(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -757,19 +865,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -1.6
             
-            self.pose_parameters[0][8] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][8] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][8] += rotation_factor * angle
         
         else:
             rotation_factor = 0.1
             
-            self.pose_parameters[0][8] = rotation_factor * angle
+            if operation == "set":
+                self.pose_parameters[0][8] = rotation_factor * angle
+            else:
+                self.pose_parameters[0][8] += rotation_factor * angle
         
-    def bow_right_knee(self, angle = 1):
+    def bow_right_knee(self, angle = 1, operation = "set"):
         """
         
 
@@ -789,12 +903,16 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = 2
-        self.pose_parameters[0][12] = rotation_factor * angle
         
-    def bow_left_knee(self, angle = 1):
+        if operation == "set":
+            self.pose_parameters[0][12] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][12] += rotation_factor * angle
+        
+    def bow_left_knee(self, angle = 1, operation = "set"):
         """
         
 
@@ -814,13 +932,17 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(0 , angle) #There is only one direction, so no direction argument
+        self.check_arguments(0 , angle, operation) #There is only one direction, so no direction argument
         
         rotation_factor = 2
-        self.pose_parameters[0][15] = rotation_factor * angle
+        
+        if operation == "set":
+            self.pose_parameters[0][15] = rotation_factor * angle
+        else:
+            self.pose_parameters[0][15] += rotation_factor * angle
         
     
-    def rotate_left_hip(self, direction = 1, angle = 1):
+    def rotate_left_hip(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -847,19 +969,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.3
             
-            self.pose_parameters[0][7] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][7] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][7] += angle * rotation_factor
             
         else:
             rotation_factor = -0.35
             
-            self.pose_parameters[0][7] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][7] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][7] += angle * rotation_factor
             
-    def rotate_right_hip(self, direction = 1, angle = 1):
+    def rotate_right_hip(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -886,19 +1014,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -0.3
             
-            self.pose_parameters[0][4] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][4] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][4] += angle * rotation_factor
             
         else:
             rotation_factor = 0.35
             
-            self.pose_parameters[0][4] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][4] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][4] += angle * rotation_factor
             
-    def rotate_left_knee(self, direction = 1, angle = 1):
+    def rotate_left_knee(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -925,19 +1059,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.3
             
-            self.pose_parameters[0][16] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][16] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][16] += angle * rotation_factor
             
         else:
             rotation_factor = -0.35
             
-            self.pose_parameters[0][16] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][16] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][16] += angle * rotation_factor
             
-    def rotate_right_knee(self, direction = 1, angle = 1):
+    def rotate_right_knee(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -964,19 +1104,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -0.3
             
-            self.pose_parameters[0][13] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][13] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][13] += angle * rotation_factor
             
         else:
             rotation_factor = 0.35
             
-            self.pose_parameters[0][13] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][13] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][13] += angle * rotation_factor
             
-    def rotate_left_foot(self, direction = 1, angle = 1):
+    def rotate_left_foot(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1003,19 +1149,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.3
             
-            self.pose_parameters[0][25] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][25] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][25] += angle * rotation_factor
             
         else:
             rotation_factor = -0.35
             
-            self.pose_parameters[0][25] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][25] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][25] += angle * rotation_factor
             
-    def rotate_right_foot(self, direction = 1, angle = 1):
+    def rotate_right_foot(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1042,19 +1194,25 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -0.3
             
-            self.pose_parameters[0][22] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][22] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][22] += angle * rotation_factor
             
         else:
             rotation_factor = 0.35
             
-            self.pose_parameters[0][22] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][22] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][22] += angle * rotation_factor
             
-    def rotate_right_leg(self, direction = 1, angle = 1):
+    def rotate_right_leg(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1081,11 +1239,11 @@ class PoseParameterGenerator():
 
         """
         
-        self.rotate_right_hip(direction, angle)
-        self.rotate_right_knee(direction, angle)
-        self.rotate_right_foot(direction, angle)
+        self.rotate_right_hip(direction, angle, operation)
+        self.rotate_right_knee(direction, angle, operation)
+        self.rotate_right_foot(direction, angle, operation)
         
-    def rotate_left_leg(self, direction = 1, angle = 1):
+    def rotate_left_leg(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1112,11 +1270,11 @@ class PoseParameterGenerator():
 
         """
         
-        self.rotate_left_hip(direction, angle)
-        self.rotate_left_knee(direction, angle)
-        self.rotate_left_foot(direction, angle)
+        self.rotate_left_hip(direction, angle, operation)
+        self.rotate_left_knee(direction, angle, operation)
+        self.rotate_left_foot(direction, angle, operation)
         
-    def bend_over_and_back(self, direction = 1, angle = 1):
+    def bend_over_and_back(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1143,23 +1301,33 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][9] = angle * rotation_factor
-            self.pose_parameters[0][18] = angle * rotation_factor
-            self.pose_parameters[0][27] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][9] = angle * rotation_factor
+                self.pose_parameters[0][18] = angle * rotation_factor
+                self.pose_parameters[0][27] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][9] += angle * rotation_factor
+                self.pose_parameters[0][18] += angle * rotation_factor
+                self.pose_parameters[0][27] += angle * rotation_factor
             
         else:
             rotation_factor = - 0.35
             
-            self.pose_parameters[0][9] = angle * rotation_factor
-            self.pose_parameters[0][18] = angle * rotation_factor
-            self.pose_parameters[0][27] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][9] = angle * rotation_factor
+                self.pose_parameters[0][18] = angle * rotation_factor
+                self.pose_parameters[0][27] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][9] += angle * rotation_factor
+                self.pose_parameters[0][18] += angle * rotation_factor
+                self.pose_parameters[0][27] += angle * rotation_factor
     
-    def rotate_torso(self, direction = 1, angle = 1):
+    def rotate_torso(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1186,23 +1354,33 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][10] = angle * rotation_factor
-            self.pose_parameters[0][19] = angle * rotation_factor
-            self.pose_parameters[0][28] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][10] = angle * rotation_factor
+                self.pose_parameters[0][19] = angle * rotation_factor
+                self.pose_parameters[0][28] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][10] += angle * rotation_factor
+                self.pose_parameters[0][19] += angle * rotation_factor
+                self.pose_parameters[0][28] += angle * rotation_factor
             
         else:
             rotation_factor = - 0.6
             
-            self.pose_parameters[0][10] = angle * rotation_factor
-            self.pose_parameters[0][19] = angle * rotation_factor
-            self.pose_parameters[0][28] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][10] = angle * rotation_factor
+                self.pose_parameters[0][19] = angle * rotation_factor
+                self.pose_parameters[0][28] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][10] += angle * rotation_factor
+                self.pose_parameters[0][19] += angle * rotation_factor
+                self.pose_parameters[0][28] += angle * rotation_factor
             
-    def tilt_torso(self, direction = 1, angle = 1):
+    def tilt_torso(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1229,23 +1407,33 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.4
             
-            self.pose_parameters[0][11] = angle * rotation_factor
-            self.pose_parameters[0][20] = angle * rotation_factor
-            self.pose_parameters[0][29] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][11] = angle * rotation_factor
+                self.pose_parameters[0][20] = angle * rotation_factor
+                self.pose_parameters[0][29] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][11] += angle * rotation_factor
+                self.pose_parameters[0][20] += angle * rotation_factor
+                self.pose_parameters[0][29] += angle * rotation_factor
             
         else:
             rotation_factor = - 0.4
             
-            self.pose_parameters[0][11] = angle * rotation_factor
-            self.pose_parameters[0][20] = angle * rotation_factor
-            self.pose_parameters[0][29] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][11] = angle * rotation_factor
+                self.pose_parameters[0][20] = angle * rotation_factor
+                self.pose_parameters[0][29] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][11] += angle * rotation_factor
+                self.pose_parameters[0][20] += angle * rotation_factor
+                self.pose_parameters[0][29] += angle * rotation_factor
             
-    def tilt_head(self, direction = 1, angle = 1):
+    def tilt_head(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1272,22 +1460,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = - 0.6
             
-            self.pose_parameters[0][38] = angle * rotation_factor
-            self.pose_parameters[0][47] = angle * rotation_factor
-            
+            if operation == "set":
+                self.pose_parameters[0][38] = angle * rotation_factor
+                self.pose_parameters[0][47] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][38] += angle * rotation_factor
+                self.pose_parameters[0][47] += angle * rotation_factor
             
         else:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][38] = angle * rotation_factor
-            self.pose_parameters[0][47] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][38] = angle * rotation_factor
+                self.pose_parameters[0][47] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][38] += angle * rotation_factor
+                self.pose_parameters[0][47] += angle * rotation_factor
             
-    def rotate_head(self, direction = 1, angle = 1):
+    def rotate_head(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1314,22 +1509,30 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 1
             
-            self.pose_parameters[0][37] = angle * rotation_factor
-            self.pose_parameters[0][46] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][37] = angle * rotation_factor
+                self.pose_parameters[0][46] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][37] += angle * rotation_factor
+                self.pose_parameters[0][46] += angle * rotation_factor
             
             
         else:
             rotation_factor = - 1
             
-            self.pose_parameters[0][37] = angle * rotation_factor
-            self.pose_parameters[0][46] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][37] = angle * rotation_factor
+                self.pose_parameters[0][46] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][37] += angle * rotation_factor
+                self.pose_parameters[0][46] += angle * rotation_factor
             
-    def bow_head(self, direction = 1, angle = 1):
+    def bow_head(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1356,22 +1559,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 0.6
             
-            self.pose_parameters[0][36] = angle * rotation_factor
-            self.pose_parameters[0][45] = angle * rotation_factor
-            
+            if operation == "set":
+                self.pose_parameters[0][36] = angle * rotation_factor
+                self.pose_parameters[0][45] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][36] += angle * rotation_factor
+                self.pose_parameters[0][45] += angle * rotation_factor
             
         else:
             rotation_factor = - 0.6
             
-            self.pose_parameters[0][36] = angle * rotation_factor
-            self.pose_parameters[0][45] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][36] = angle * rotation_factor
+                self.pose_parameters[0][45] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][36] += angle * rotation_factor
+                self.pose_parameters[0][45] += angle * rotation_factor
             
-    def rotate_right_arm_horizontally_to_front(self, direction = 1, angle = 1):
+    def rotate_right_arm_horizontally_to_front(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1398,21 +1608,29 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = -1
             
-            self.pose_parameters[0][40] = angle * rotation_factor
-            self.pose_parameters[0][49] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][40] = angle * rotation_factor
+                self.pose_parameters[0][49] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][40] += angle * rotation_factor
+                self.pose_parameters[0][49] += angle * rotation_factor
             
         else:
             rotation_factor = 0.2
             
-            self.pose_parameters[0][40] = angle * rotation_factor
-            self.pose_parameters[0][49] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][40] = angle * rotation_factor
+                self.pose_parameters[0][49] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][40] += angle * rotation_factor
+                self.pose_parameters[0][49] += angle * rotation_factor
             
-    def rotate_left_arm_horizontally_to_front(self, direction = 1, angle = 1):
+    def rotate_left_arm_horizontally_to_front(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1439,19 +1657,27 @@ class PoseParameterGenerator():
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         if direction == 1:
             rotation_factor = 1
             
-            self.pose_parameters[0][43] = angle * rotation_factor
-            self.pose_parameters[0][52] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][43] = angle * rotation_factor
+                self.pose_parameters[0][52] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][43] += angle * rotation_factor
+                self.pose_parameters[0][52] += angle * rotation_factor
             
         else:
             rotation_factor = -0.2
             
-            self.pose_parameters[0][43] = angle * rotation_factor
-            self.pose_parameters[0][52] = angle * rotation_factor
+            if operation == "set":
+                self.pose_parameters[0][43] = angle * rotation_factor
+                self.pose_parameters[0][52] = angle * rotation_factor
+            else:
+                self.pose_parameters[0][43] += angle * rotation_factor
+                self.pose_parameters[0][52] += angle * rotation_factor
             
             
 class SpecialPoseGenerator(PoseParameterGenerator):
@@ -1459,7 +1685,7 @@ class SpecialPoseGenerator(PoseParameterGenerator):
     def __init__(self, *args, **kwargs):
         super(SpecialPoseGenerator, self).__init__(*args, **kwargs)
     
-    def lift_one_arm_and_press_other_to_body(self, direction = 1, angle = 1, arm = 1):
+    def lift_one_arm_and_press_other_to_body(self, direction = 1, angle = 1, arm = 1, operation = "set"):
         """
         
 
@@ -1486,7 +1712,7 @@ class SpecialPoseGenerator(PoseParameterGenerator):
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         wrong_arm_argument = arm == 0 or arm == 1
         
@@ -1495,15 +1721,15 @@ class SpecialPoseGenerator(PoseParameterGenerator):
             
         if arm == 1:
             
-            self.lift_or_lower_left_arm(0, 1) # Press left arm to body
-            self.lift_or_lower_right_arm(direction, angle) 
+            self.lift_or_lower_left_arm(0, 1, operation) # Press left arm to body
+            self.lift_or_lower_right_arm(direction, angle, operation) 
             
         else:
             
-            self.lift_or_lower_right_arm(0, 1) # Press right arm to body
-            self.lift_or_lower_left_arm(direction, angle) 
+            self.lift_or_lower_right_arm(0, 1, operation) # Press right arm to body
+            self.lift_or_lower_left_arm(direction, angle, operation) 
             
-    def lift_one_arm_and_lift_and_fix_other(self, direction = 1, angle = 1, arm = 1):
+    def lift_one_arm_and_lift_and_fix_other(self, direction = 1, angle = 1, arm = 1, operation = "set"):
         """
         
 
@@ -1530,7 +1756,7 @@ class SpecialPoseGenerator(PoseParameterGenerator):
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
         wrong_arm_argument = arm == 0 or arm == 1
         
@@ -1539,15 +1765,15 @@ class SpecialPoseGenerator(PoseParameterGenerator):
             
         if arm == 1:
             
-            self.lift_or_lower_left_arm(1, 1) # Lift left arm
-            self.lift_or_lower_right_arm(direction, angle) 
+            self.lift_or_lower_left_arm(1, 1, operation) # Lift left arm
+            self.lift_or_lower_right_arm(direction, angle, operation) 
             
         else:
             
-            self.lift_or_lower_right_arm(1, 1) # Lift right arm
-            self.lift_or_lower_left_arm(direction, angle)
+            self.lift_or_lower_right_arm(1, 1, operation) # Lift right arm
+            self.lift_or_lower_left_arm(direction, angle, operation)
             
-    def lift_arms_symmetrically(self, direction = 1, angle = 1):
+    def lift_arms_symmetrically(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1566,12 +1792,12 @@ class SpecialPoseGenerator(PoseParameterGenerator):
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
-        self.lift_or_lower_left_arm(direction, angle) 
-        self.lift_or_lower_right_arm(direction, angle) 
+        self.lift_or_lower_left_arm(direction, angle, operation) 
+        self.lift_or_lower_right_arm(direction, angle, operation) 
         
-    def lift_arms_contrarily(self, direction = 1, angle = 1):
+    def lift_arms_contrarily(self, direction = 1, angle = 1, operation = "set"):
         """
         
 
@@ -1590,14 +1816,14 @@ class SpecialPoseGenerator(PoseParameterGenerator):
 
         """
         
-        self.check_arguments(direction, angle)
+        self.check_arguments(direction, angle, operation)
         
-        self.lift_or_lower_left_arm(direction, angle)
+        self.lift_or_lower_left_arm(direction, angle, operation)
         
         dif = [1, 0]
-        self.lift_or_lower_right_arm(dif[direction], angle)
+        self.lift_or_lower_right_arm(dif[direction], angle, operation)
     
-    def show_hands(self):
+    def show_hands(self, operation = "set"):
         """
         Statisch: Hände hoch, Ellenbogen um 90 grad gekümmt, Handflächen zeigen nach vorne.
 
@@ -1608,49 +1834,49 @@ class SpecialPoseGenerator(PoseParameterGenerator):
         """
         
         
-        self.rotate_left_shoulder(0, 1)
-        self.rotate_left_elbow(0, 0.5)
-        self.bow_left_elbow_to_top(0.9)
-        self.rotate_left_hand(1, 0.7)
+        self.rotate_left_shoulder(0, 1, operation)
+        self.rotate_left_elbow(0, 0.5, operation)
+        self.bow_left_elbow_to_top(0.9, operation)
+        self.rotate_left_hand(1, 0.7, operation)
         
-        self.rotate_right_shoulder(0, 1)
-        self.rotate_right_elbow(0, 0.5)
-        self.bow_right_elbow_to_top(0.9)
-        self.rotate_right_hand(1, 0.7)
+        self.rotate_right_shoulder(0, 1, operation)
+        self.rotate_right_elbow(0, 0.5, operation)
+        self.bow_right_elbow_to_top(0.9, operation)
+        self.rotate_right_hand(1, 0.7, operation)
         
-    def from_show_hands_to_stretched_up(self, angle):
+    def from_show_hands_to_stretched_up(self, angle, operation = "set"):
         
-        self.rotate_left_shoulder(0, 1)
-        self.rotate_left_elbow(0, 0.5)
-        self.bow_left_elbow_to_top(0.9 - (angle * 0.9))
-        self.rotate_left_hand(1, 0.7)
+        self.rotate_left_shoulder(0, 1, operation)
+        self.rotate_left_elbow(0, 0.5, operation)
+        self.bow_left_elbow_to_top(0.9 - (angle * 0.9), operation)
+        self.rotate_left_hand(1, 0.7, operation)
         
-        self.rotate_right_shoulder(0, 1)
-        self.rotate_right_elbow(0, 0.5)
-        self.bow_right_elbow_to_top(0.9 - (angle * 0.9))
-        self.rotate_right_hand(1, 0.7)
+        self.rotate_right_shoulder(0, 1, operation)
+        self.rotate_right_elbow(0, 0.5, operation)
+        self.bow_right_elbow_to_top(0.9 - (angle * 0.9), operation)
+        self.rotate_right_hand(1, 0.7, operation)
         
-        self.lift_arms_symmetrically(1, angle)
+        self.lift_arms_symmetrically(1, angle, operation)
         
-        self.rotate_left_arm_horizontally_to_front(1, angle * 0.3)  
-        self.rotate_right_arm_horizontally_to_front(1, angle * 0.3) 
+        self.rotate_left_arm_horizontally_to_front(1, angle * 0.3, operation)  
+        self.rotate_right_arm_horizontally_to_front(1, angle * 0.3, operation) 
         
-    def from_show_hands_to_stretched_down(self, angle):
+    def from_show_hands_to_stretched_down(self, angle, operation = "set"):
         
-        self.rotate_left_shoulder(0, 1)
-        self.rotate_left_elbow(0, 0.5)
-        self.bow_left_elbow_to_top(0.9 - (angle * 0.9))
-        self.rotate_left_hand(1, 0.7)
+        self.rotate_left_shoulder(0, 1, operation)
+        self.rotate_left_elbow(0, 0.5, operation)
+        self.bow_left_elbow_to_top(0.9 - (angle * 0.9), operation)
+        self.rotate_left_hand(1, 0.7, operation)
         
-        self.rotate_right_shoulder(0, 1)
-        self.rotate_right_elbow(0, 0.5)
-        self.bow_right_elbow_to_top(0.9 - (angle * 0.9))
-        self.rotate_right_hand(1, 0.7)
+        self.rotate_right_shoulder(0, 1, operation)
+        self.rotate_right_elbow(0, 0.5, operation)
+        self.bow_right_elbow_to_top(0.9 - (angle * 0.9), operation)
+        self.rotate_right_hand(1, 0.7, operation)
         
-        self.lift_arms_symmetrically(0, angle)
+        self.lift_arms_symmetrically(0, angle, operation)
         
-        self.rotate_left_arm_horizontally_to_front(0, angle * 0.4)  
-        self.rotate_right_arm_horizontally_to_front(0, angle * 0.4) 
+        self.rotate_left_arm_horizontally_to_front(0, angle * 0.4, operation)  
+        self.rotate_right_arm_horizontally_to_front(0, angle * 0.4, operation) 
 
 
 """

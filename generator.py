@@ -34,7 +34,11 @@ trans = tf.constant(np.zeros((1,3)),dtype=tf.float32)
 
 spg = SpecialPoseGenerator()
 
-spg.from_show_hands_to_stretched_down(0)
+#spg.from_show_hands_to_stretched_down(0)
+spg.rotate_torso(1, 1)
+spg.rotate_head(0, 1, "add")
+spg.rotate_head(1, 1, "add")
+spg.rotate_torso(0, 1, "add")
 
 
 pose = spg.get_pose_parameters()

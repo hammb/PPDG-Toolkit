@@ -202,9 +202,13 @@ class STAR(object):
         v_posed = v_shaped +  poseblendshapes
         tf_J = tf.einsum('ij,ajk->aik', self.J_regressor, v_shaped)
         result, Jtr = verts_core(tf.reshape(pose,(-1,24,3)), v_posed, tf_J, self.weights, self.kintree_table)
+        
         result = tf.add(result, tf.tile(tf.expand_dims(trans, axis=1), [1, 6890, 1]))
+        
         result.Jtr = tf.add(Jtr, tf.tile(tf.expand_dims(trans, axis=1), [1, 24, 1]))
+        
         result.pose =  pose
         result.trans = trans
         result.betas = betas
-        return result
+        
+        return result, Jtr
